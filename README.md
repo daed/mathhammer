@@ -4,9 +4,10 @@ A python script for modelling warhammer 40k 8th edition damage probability
 ```Syntax:  mathhammer.py <num shots> <bs/ws> <s> <ap> <t> <sv> <d>```
 
 To calculate 20 bolter shots from a space marine into other space marines:
-mathhammer.py 20 3+ 4 0 4 3+ 1
+```mathhammer.py 20 3+ 4 0 4 3+ 1```
 
 The result is the following chart:
+```
 Damage   Outcomes        percent
      0       9489         9.5%
      1      23751        23.8%
@@ -18,6 +19,7 @@ Damage   Outcomes        percent
      7        338         0.3%
      8         68         0.1%
      9         10         0.0%
+```
 
 This chart means that, of all the hypothetical die rolls involved in trying these 20 attacks 100000 times, 28.4% of the time, 2 damage is dealt to the opposing squad of space marines.
 
