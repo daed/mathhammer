@@ -1,7 +1,7 @@
 # mathhammer
 A python script for modelling warhammer 40k 8th edition damage probability
 
-Syntax:  mathhammer.py <num shots> <bs/ws> <s> <ap> <t> <sv> <d>
+<pre>Syntax:  mathhammer.py <num shots> <bs/ws> <s> <ap> <t> <sv> <d></pre>
 
 To calculate 20 bolter shots from a space marine into other space marines:
 mathhammer.py 20 3+ 4 0 4 3+ 1
