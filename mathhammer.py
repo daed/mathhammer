@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import secrets
 import sys
 from collections import Counter
@@ -22,7 +24,7 @@ def atof(s):
 def statToInt(bs):
     if '+' in bs:
         bs = bs.strip("+")
-        bs = int(bs)
+    bs = int(bs)
     return bs
 
 
@@ -31,7 +33,7 @@ def calcAttacks(num):
         if 'd' in num or 'D' in num:
             num = num.lower()
             if num.find('d') == 1:  # it's a '2d6' here, not a 'd6'
-                count = num[num.find('d')-1]
+                count = int(num[num.find('d')-1])
             else:
                 count = 1
             size = num[num.find('d')+1]
@@ -104,26 +106,18 @@ def main():
         sys.exit(1)
 
     num = sys.argv[1]
-    bs = sys.argv[2]
+    bs_org = sys.argv[2]
     s  = sys.argv[3]
     ap = sys.argv[4]
     t  = sys.argv[5]
-    sv = sys.argv[6]
+    sv_org = sys.argv[6]
     d  = sys.argv[7]
 
-    bs = statToInt(bs)
+    s = statToInt(s)
+    t = statToInt(t)
+    bs = statToInt(bs_org)
     ap = statToInt(ap)
-    sv = statToInt(sv)
-    '''
-    code flow needed:
-    - generate large number of rolls.  number = 3 x trials desired
-    - start loop
-    - test to hit
-    - test to wound
-    - test save
-    - loop
-    - report
-    '''
+    sv = statToInt(sv_org)
 
     outcomes = []
     for i in range(0, trials):
@@ -138,6 +132,9 @@ def main():
                         dam = calcAttacks(d)
                         totDam += dam
         outcomes.append(totDam)
+    print("\n\n")
+    print("A: %s S: %s AP: %s D: %s @ BS or WS: %s" % (num, s, ap, d, bs_org))
+    print("vs T: %s sv %s" % (t, sv_org))
     print("Damage", "\t", "Outcomes", "\t", "percent")
     for x in sorted(Counter(outcomes).keys()):
         percent = '%4s' % str('%.1f' % (Counter(outcomes)[x]/(trials/100)))
