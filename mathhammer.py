@@ -7,7 +7,7 @@ from collections import Counter
 d3 = [1, 2, 3]
 d6 = [1, 2, 3, 4, 5, 6]
 
-trials = 100000
+trials = 10000
 
 
 # Shamelessly stolen from https://stackoverflow.com/questions/1665511/python-equivalent-to-atoi-atof
@@ -55,8 +55,19 @@ def calcAttacks(num):
     return attacks
 
 
-def toHit(val):
+def toHit(val, opt):
     roll = getRoll()
+
+    # Reroll 1s
+    if opt == "-r1":
+        if roll == 1:
+            roll = getRoll()
+
+    # Reroll all failed
+    elif opt == "-r":
+        if not eval(val, roll):
+            roll = getRoll()
+
     return eval(val, roll)
 
 
@@ -100,10 +111,19 @@ def eval(target, roll):
 def main():
     # bs s ap t sv
     if len(sys.argv) < 8:
-        print("Syntax: mathhammer.py <num shots> <bs/ws> <s> <ap> <t> <sv> <d>")
+        print("Syntax: mathhammer.py <num shots> <bs/ws> <s> <ap> <t> <sv> <d> <opt>")
         print("Syntax: mathhammer.py 20 3+ 4 0 4 3+ 1")
         print("Syntax: mathhammer.py d6 3+ 4 0 4 3+ d3")
+        print("Syntax: mathhammer.py d6 3+ 4 0 4 3+ d3 -r1")
+        print("Syntax: <opt> can be blank, -r or -r1")
+        print("Syntax: -r allows to reroll all failed to-hit")
+        print("Syntax: -r1 allows to reroll all 1s to-hit")
         sys.exit(1)
+
+    if len(sys.argv) >= 9:
+        opt = sys.argv[8]
+    else:
+        opt = ""
 
     num = sys.argv[1]
     bs_org = sys.argv[2]
@@ -126,14 +146,19 @@ def main():
         totDam = 0
         atks = calcAttacks(num)
         for x in range(0, atks):
-            if toHit(bs):
+            if toHit(bs, opt):
                 if toWound(s, t):
                     if not toSave(ap, sv):
                         dam = calcAttacks(d)
                         totDam += dam
         outcomes.append(totDam)
+    desc = ""
+    if opt == "-r1":
+        desc = "Reroll 1s to hit"
+    elif opt == "-r":
+        desc = "Reroll all to hit"
     print("\n\n")
-    print("A: %s S: %s AP: %s D: %s @ BS or WS: %s" % (num, s, ap, d, bs_org))
+    print("A: %s S: %s AP: %s D: %s @ BS or WS: %s  %s" % (num, s, ap, d, bs_org, desc))
     print("vs T: %s sv %s" % (t, sv_org))
     print("Damage", "\t", "Outcomes", "\t", "percent")
     for x in sorted(Counter(outcomes).keys()):

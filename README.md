@@ -25,7 +25,12 @@ This chart means that, of all the hypothetical die rolls involved in trying thes
 
 The script is aware of damage and number of attacks.  Damage can be in integer values, or die notation (2d6, d6, d3, etc).  Ballistic skill and Saves can be expressed as integers or in 40k stat notation (3+, 2+, etc)
 
-It is not capible of handling special rules such as rerolls at this time.
+Rerolls to hit are implemented now.  After the end of the list of stats you provide, include -r if you want to reroll all failing to hits or -r1 if you only want to reroll 1s to hit.  Rerolling to wound is still not yet implemented.
+
+For example:
+```mathhammer.py 20 3+ 4 0 4 3+ 1 -r1```
+This will calculate the same bolter shots as above, but rerolling 1s to hit.
+
 Future functionality may include providing invulnerable saves, but they are not implemented at this time.
 
 Note that since this script uses psuedorandom data to generate its result, each execution with the same parameters may provide a different result.  
