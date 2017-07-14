@@ -1,5 +1,7 @@
 # mathhammer
-A python script for modelling warhammer 40k 8th edition damage probability
+A python script for modelling warhammer 40k 8th edition damage probability.
+
+Requres Python 3.6+ for the secrets library
 
 ```Syntax:  mathhammer.py <num shots> <bs/ws> <s> <ap> <t> <sv> <d>```
 
