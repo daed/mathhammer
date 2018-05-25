@@ -125,6 +125,7 @@ def main():
         print("Syntax: -r1 allows to reroll all 1s to-hit")
         sys.exit(1)
 
+
     # check for optional reroll parameter
     if len(sys.argv) >= 9:
         opt = sys.argv[8]
